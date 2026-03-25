@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import TopNavbar from './TopNavbar';
+import NotificationContainer from '../../components/notifications/NotificationContainer';
 
 export default function DashboardLayout() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
@@ -20,13 +22,23 @@ export default function DashboardLayout() {
   }
 
   return (
-    <div className="min-h-dvh bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+    <div className="min-h-dvh" style={{ background: 'var(--bg)', color: 'var(--text-h)' }}>
       <div className="flex">
-        <aside className="hidden w-64 flex-col border-r border-slate-200/70 lg:flex dark:border-slate-800/70">
+        <aside
+          className="hidden flex-col border-r lg:flex transition-[width] duration-300"
+          style={{
+            borderColor: 'var(--border)',
+            background: 'var(--bg)',
+            width: sidebarCollapsed ? 72 : 256,
+          }}
+        >
           <div className="h-14 flex items-center px-4">
             <div className="text-sm font-semibold tracking-wide">B2B SaaS</div>
           </div>
-          <Sidebar />
+          <Sidebar
+            collapsed={sidebarCollapsed}
+            onToggleCollapsed={() => setSidebarCollapsed((v) => !v)}
+          />
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col">
@@ -47,14 +59,23 @@ export default function DashboardLayout() {
             aria-label="Close navigation menu"
           />
 
-          <aside className="absolute inset-y-0 left-0 w-72 border-r border-slate-200/70 bg-white shadow-xl dark:border-slate-800/70 dark:bg-slate-950">
+          <aside
+            className="absolute inset-y-0 left-0 w-72 border-r shadow-xl"
+            style={{ borderColor: 'var(--border)', background: 'var(--bg)' }}
+          >
             <div className="h-14 flex items-center px-4">
               <div className="text-sm font-semibold tracking-wide">B2B SaaS</div>
             </div>
-            <Sidebar onNavigate={closeMobile} />
+            <Sidebar
+              collapsed={sidebarCollapsed}
+              onNavigate={closeMobile}
+              onToggleCollapsed={() => setSidebarCollapsed((v) => !v)}
+            />
           </aside>
         </div>
       ) : null}
+
+      <NotificationContainer />
     </div>
   );
 }

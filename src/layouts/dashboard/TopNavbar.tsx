@@ -7,13 +7,24 @@ export default function TopNavbar({ onMenuClick }: { onMenuClick: () => void }) 
   }
 
   return (
-    <div className="sticky top-0 z-10 border-b border-slate-200/70 bg-white/80 backdrop-blur dark:border-slate-800/70 dark:bg-slate-950/80">
+    <div
+      className="sticky top-0 z-10 backdrop-blur"
+      style={{
+        borderBottom: '1px solid var(--border)',
+        background: 'color-mix(in srgb, var(--bg) 86%, transparent)',
+      }}
+    >
       <div className="flex h-14 items-center gap-3 px-4 lg:px-6">
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-slate-200/70 bg-white text-slate-700 shadow-sm lg:hidden dark:border-slate-800/70 dark:bg-slate-900 dark:text-slate-200"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-md shadow-sm lg:hidden"
           onClick={handleMenuClick}
           aria-label="Open navigation menu"
+          style={{
+            border: '1px solid var(--border)',
+            background: 'color-mix(in srgb, var(--bg) 90%, transparent)',
+            color: 'var(--text-h)',
+          }}
         >
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
             <path
@@ -27,14 +38,20 @@ export default function TopNavbar({ onMenuClick }: { onMenuClick: () => void }) 
 
         <div className="min-w-0 flex-1">
           <div className="truncate text-sm font-semibold tracking-wide">Admin console</div>
-          <div className="truncate text-xs text-slate-600 dark:text-slate-300">
+          <div
+            className="truncate text-xs"
+            style={{ color: 'color-mix(in srgb, var(--text) 85%, transparent)' }}
+          >
             B2B Healthcare SaaS
           </div>
         </div>
 
         <div className="flex items-center gap-2">
           <div className="hidden sm:block">
-            <div className="text-right text-xs text-slate-600 dark:text-slate-300">
+            <div
+              className="text-right text-xs"
+              style={{ color: 'color-mix(in srgb, var(--text) 85%, transparent)' }}
+            >
               Signed in as
             </div>
             <div className="text-right text-sm font-medium">Admin User</div>
@@ -42,9 +59,20 @@ export default function TopNavbar({ onMenuClick }: { onMenuClick: () => void }) 
 
           <button
             type="button"
-            className="inline-flex h-10 items-center gap-2 rounded-md border border-slate-200/70 bg-white px-3 text-sm text-slate-700 shadow-sm dark:border-slate-800/70 dark:bg-slate-900 dark:text-slate-200"
+            className="inline-flex h-10 items-center gap-2 rounded-md px-3 text-sm shadow-sm"
+            style={{
+              border: '1px solid var(--border)',
+              background: 'color-mix(in srgb, var(--bg) 92%, transparent)',
+              color: 'var(--text-h)',
+            }}
           >
-            <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+            <span
+              className="inline-flex h-8 w-8 items-center justify-center rounded-full"
+              style={{
+                background: 'var(--accent-bg)',
+                color: 'var(--accent)',
+              }}
+            >
               AU
             </span>
           </button>

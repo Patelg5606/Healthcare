@@ -5,6 +5,7 @@ import PatientsPage from '../pages/PatientsPage';
 import AnalyticsPage from '../pages/AnalyticsPage';
 import NotificationsPage from '../pages/NotificationsPage';
 import LoginPage from '../pages/LoginPage';
+import PatientDetailPage from '../pages/PatientDetailPage';
 import NotFoundPage from '../pages/NotFoundPage';
 
 export default function AppRoutes() {
@@ -15,6 +16,7 @@ export default function AppRoutes() {
       <Route element={<AppLayout />}>
         <Route index element={<DashboardPage />} />
         <Route path="patients" element={<PatientsPage />} />
+        <Route path="patients/:patientId" element={<PatientDetailPage />} />
         <Route path="analytics" element={<AnalyticsPage />} />
         <Route path="notifications" element={<NotificationsPage />} />
       </Route>

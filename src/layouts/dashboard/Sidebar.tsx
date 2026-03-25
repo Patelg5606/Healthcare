@@ -18,7 +18,15 @@ function Icon({ children }: { children: ReactNode }) {
   );
 }
 
-export default function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
+export default function Sidebar({
+  collapsed,
+  onNavigate,
+  onToggleCollapsed,
+}: {
+  collapsed: boolean;
+  onNavigate?: () => void;
+  onToggleCollapsed: () => void;
+}) {
   const links = [
     {
       to: '/',
@@ -71,11 +79,11 @@ export default function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
 
   return (
     <nav className="flex flex-col gap-2 px-3 py-4">
-      <div className="px-2 pb-2">
-        <div className="text-xs font-semibold tracking-wide text-slate-600 dark:text-slate-300">
-          MENU
+      {!collapsed ? (
+        <div className="px-2 pb-2">
+          <div className="text-xs font-semibold tracking-wide text-[color:var(--text)]">MENU</div>
         </div>
-      </div>
+      ) : null}
 
       {links.map((l) => (
         <NavLink
@@ -85,23 +93,54 @@ export default function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
           onClick={onNavigate}
           className={({ isActive }) =>
             [
-              'group flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors',
-              'focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2',
-              isActive
-                ? 'bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-slate-100'
-                : 'text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800/60',
+              'nav-item group flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors',
+              'focus:outline-none focus:ring-2 focus:ring-[color:var(--accent)] focus:ring-offset-0',
+              collapsed ? 'justify-center gap-0 px-2' : '',
+              isActive ? 'active' : 'hover:bg-[color:var(--accent-bg)]/40',
             ].join(' ')
           }
         >
           <span
-            className="text-slate-700 group-hover:text-slate-900 dark:text-slate-200 dark:group-hover:text-slate-100"
             aria-hidden="true"
+            style={{
+              color: 'var(--text-h)',
+            }}
           >
             {l.icon}
           </span>
-          <span className="truncate">{l.label}</span>
+          {!collapsed ? <span className="truncate">{l.label}</span> : null}
         </NavLink>
       ))}
+
+      <div
+        className="mt-3 flex flex-col gap-2 pt-3 border-t"
+        style={{ borderColor: 'var(--border)' }}
+      >
+        <button
+          type="button"
+          onClick={onToggleCollapsed}
+          className="group flex items-center justify-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-[color:var(--accent-bg)]/40"
+          aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          style={{
+            color: 'var(--text)',
+          }}
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            {collapsed ? <path d="M9 18l6-6-6-6" /> : <path d="M15 18l-6-6 6-6" />}
+          </svg>
+          {!collapsed ? <span>Collapse</span> : null}
+        </button>
+      </div>
     </nav>
   );
 }
